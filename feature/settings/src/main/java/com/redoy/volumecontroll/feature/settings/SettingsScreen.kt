@@ -33,6 +33,7 @@ fun SettingsScreen(
     viewModel: SettingsViewModel,
     onBack: () -> Unit,
     onNavigateAudioEffects: () -> Unit,
+    onNavigatePerAppVolume: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -47,6 +48,7 @@ fun SettingsScreen(
         onButtonColorStyleSelected = { viewModel.updateButtonColorStyle(it) },
         onThemeModeSelected = { viewModel.updateThemeMode(it) },
         onNavigateAudioEffects = onNavigateAudioEffects,
+        onNavigatePerAppVolume = onNavigatePerAppVolume,
         onBack = onBack,
         modifier = modifier
     )
@@ -64,6 +66,7 @@ fun SettingsScreen(
     onButtonColorStyleSelected: (String) -> Unit,
     onThemeModeSelected: (String) -> Unit,
     onNavigateAudioEffects: () -> Unit,
+    onNavigatePerAppVolume: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -197,6 +200,13 @@ fun SettingsScreen(
             }
 
             Button(
+                onClick = onNavigatePerAppVolume,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = "Per-App Volume Rules")
+            }
+
+            Button(
                 onClick = onBack,
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -228,6 +238,7 @@ fun SettingsScreenPreview() {
             onButtonColorStyleSelected = {},
             onThemeModeSelected = {},
             onNavigateAudioEffects = {},
+            onNavigatePerAppVolume = {},
             onBack = {}
         )
     }

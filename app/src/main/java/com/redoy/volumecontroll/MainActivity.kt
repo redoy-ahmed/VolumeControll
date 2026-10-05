@@ -24,6 +24,8 @@ import com.redoy.volumecontroll.core.domain.repository.UserPreferencesRepository
 import com.redoy.volumecontroll.feature.home.HomeScreen
 import com.redoy.volumecontroll.feature.home.HomeViewModel
 import com.redoy.volumecontroll.feature.settings.AudioEffectsScreen
+import com.redoy.volumecontroll.feature.settings.PerAppVolumeScreen
+import com.redoy.volumecontroll.feature.settings.PerAppVolumeViewModel
 import com.redoy.volumecontroll.feature.settings.SettingsScreen
 import com.redoy.volumecontroll.feature.settings.SettingsViewModel
 import com.redoy.volumecontroll.service.floatingvolume.FloatingVolumeService
@@ -95,13 +97,21 @@ class MainActivity : ComponentActivity() {
                         SettingsScreen(
                             viewModel = settingsViewModel,
                             onBack = { navController.popBackStack() },
-                            onNavigateAudioEffects = { navController.navigate("audio_effects") }
+                            onNavigateAudioEffects = { navController.navigate("audio_effects") },
+                            onNavigatePerAppVolume = { navController.navigate("per_app_volume") }
                         )
                     }
                     composable("audio_effects") {
                         val settingsViewModel: SettingsViewModel = hiltViewModel()
                         AudioEffectsScreen(
                             audioEffectsController = settingsViewModel.audioEffectsController,
+                            onBack = { navController.popBackStack() }
+                        )
+                    }
+                    composable("per_app_volume") {
+                        val perAppViewModel: PerAppVolumeViewModel = hiltViewModel()
+                        PerAppVolumeScreen(
+                            viewModel = perAppViewModel,
                             onBack = { navController.popBackStack() }
                         )
                     }
