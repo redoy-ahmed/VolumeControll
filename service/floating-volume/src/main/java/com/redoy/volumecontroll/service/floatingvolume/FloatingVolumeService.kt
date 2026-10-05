@@ -197,7 +197,9 @@ class FloatingVolumeService : Service(), LifecycleOwner, ViewModelStoreOwner,
                                 }
                             },
                             size = prefs.buttonSize.dp,
-                            opacity = prefs.buttonOpacity
+                            opacity = prefs.buttonOpacity,
+                            shape = prefs.buttonShape,
+                            colorStyle = prefs.buttonColorStyle
                         )
                     }
                 }

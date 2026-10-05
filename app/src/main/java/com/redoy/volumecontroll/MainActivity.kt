@@ -8,23 +8,19 @@ import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.redoy.volumecontroll.core.domain.repository.UserPreferences
+import com.redoy.volumecontroll.core.domain.repository.UserPreferencesRepository
 import com.redoy.volumecontroll.feature.home.HomeScreen
 import com.redoy.volumecontroll.feature.home.HomeViewModel
 import com.redoy.volumecontroll.feature.settings.AudioEffectsScreen
@@ -33,9 +29,13 @@ import com.redoy.volumecontroll.feature.settings.SettingsViewModel
 import com.redoy.volumecontroll.service.floatingvolume.FloatingVolumeService
 import com.redoy.volumecontroll.ui.theme.VolumeControllTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var preferencesRepository: UserPreferencesRepository
 
     private var hasOverlayPermission by mutableStateOf(false)
 
@@ -45,7 +45,14 @@ class MainActivity : ComponentActivity() {
         hasOverlayPermission = Settings.canDrawOverlays(this)
 
         setContent {
-            VolumeControllTheme {
+            val prefs by preferencesRepository.userPreferences.collectAsState(initial = UserPreferences())
+            val darkTheme = when (prefs.themeMode) {
+                "DARK" -> true
+                "LIGHT" -> false
+                else -> isSystemInDarkTheme()
+            }
+
+            VolumeControllTheme(darkTheme = darkTheme) {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,

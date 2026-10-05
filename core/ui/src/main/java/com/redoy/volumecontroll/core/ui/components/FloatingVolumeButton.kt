@@ -5,6 +5,7 @@ import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material3.Icon
@@ -32,14 +33,27 @@ fun FloatingVolumeButton(
     onVerticalScroll: (Float) -> Unit = {},
     modifier: Modifier = Modifier,
     size: Dp = 56.dp,
-    opacity: Float = 0.9f
+    opacity: Float = 0.9f,
+    shape: String = "CIRCLE",
+    colorStyle: String = "PRIMARY"
 ) {
     val haptic = LocalHapticFeedback.current
+    val buttonShape = when (shape) {
+        "ROUNDED_SQUARE" -> RoundedCornerShape(12.dp)
+        "PILL" -> RoundedCornerShape(50)
+        else -> CircleShape
+    }
+    val buttonColor = when (colorStyle) {
+        "SECONDARY" -> MaterialTheme.colorScheme.secondaryContainer
+        "TERTIARY" -> MaterialTheme.colorScheme.tertiaryContainer
+        else -> MaterialTheme.colorScheme.primaryContainer
+    }
+
     Box(
         modifier = modifier
             .size(size)
-            .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = opacity))
+            .clip(buttonShape)
+            .background(buttonColor.copy(alpha = opacity))
             .pointerInput(Unit) {
                 detectDragGestures(
                     onDragStart = {

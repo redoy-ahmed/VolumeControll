@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.redoy.volumecontroll.core.domain.model.AudioStream
 import com.redoy.volumecontroll.core.domain.repository.UserPreferences
@@ -32,6 +33,9 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         val IS_ENABLED = booleanPreferencesKey("is_enabled")
         val BUTTON_SIZE = intPreferencesKey("button_size")
         val BUTTON_OPACITY = floatPreferencesKey("button_opacity")
+        val BUTTON_SHAPE = stringPreferencesKey("button_shape")
+        val BUTTON_COLOR_STYLE = stringPreferencesKey("button_color_style")
+        val THEME_MODE = stringPreferencesKey("theme_mode")
     }
 
     override val userPreferences: Flow<UserPreferences> = context.dataStore.data
@@ -51,6 +55,9 @@ class UserPreferencesRepositoryImpl @Inject constructor(
             val isEnabled = preferences[PreferencesKeys.IS_ENABLED] ?: true
             val buttonSize = preferences[PreferencesKeys.BUTTON_SIZE] ?: 56
             val buttonOpacity = preferences[PreferencesKeys.BUTTON_OPACITY] ?: 0.9f
+            val buttonShape = preferences[PreferencesKeys.BUTTON_SHAPE] ?: "CIRCLE"
+            val buttonColorStyle = preferences[PreferencesKeys.BUTTON_COLOR_STYLE] ?: "PRIMARY"
+            val themeMode = preferences[PreferencesKeys.THEME_MODE] ?: "SYSTEM"
 
             UserPreferences(
                 floatingX = x,
@@ -58,7 +65,10 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 selectedStream = stream,
                 isEnabled = isEnabled,
                 buttonSize = buttonSize,
-                buttonOpacity = buttonOpacity
+                buttonOpacity = buttonOpacity,
+                buttonShape = buttonShape,
+                buttonColorStyle = buttonColorStyle,
+                themeMode = themeMode
             )
         }
 
@@ -90,6 +100,24 @@ class UserPreferencesRepositoryImpl @Inject constructor(
     override suspend fun updateButtonOpacity(opacity: Float) {
         context.dataStore.edit { preferences ->
             preferences[PreferencesKeys.BUTTON_OPACITY] = opacity
+        }
+    }
+
+    override suspend fun updateButtonShape(shape: String) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.BUTTON_SHAPE] = shape
+        }
+    }
+
+    override suspend fun updateButtonColorStyle(style: String) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.BUTTON_COLOR_STYLE] = style
+        }
+    }
+
+    override suspend fun updateThemeMode(mode: String) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.THEME_MODE] = mode
         }
     }
 }

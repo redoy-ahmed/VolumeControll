@@ -47,6 +47,9 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation("androidx.glance:glance-appwidget:1.2.0")
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation("androidx.hilt:hilt-work:1.2.0")
+    ksp("androidx.hilt:hilt-compiler:1.2.0")
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 

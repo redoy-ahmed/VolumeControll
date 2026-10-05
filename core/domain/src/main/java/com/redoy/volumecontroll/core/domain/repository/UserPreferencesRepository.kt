@@ -9,7 +9,10 @@ data class UserPreferences(
     val selectedStream: AudioStream = AudioStream.MUSIC,
     val isEnabled: Boolean = true,
     val buttonSize: Int = 56,
-    val buttonOpacity: Float = 0.9f
+    val buttonOpacity: Float = 0.9f,
+    val buttonShape: String = "CIRCLE",
+    val buttonColorStyle: String = "PRIMARY",
+    val themeMode: String = "SYSTEM"
 )
 
 interface UserPreferencesRepository {
@@ -19,4 +22,7 @@ interface UserPreferencesRepository {
     suspend fun updateEnabled(enabled: Boolean)
     suspend fun updateButtonSize(size: Int)
     suspend fun updateButtonOpacity(opacity: Float)
+    suspend fun updateButtonShape(shape: String)
+    suspend fun updateButtonColorStyle(style: String)
+    suspend fun updateThemeMode(mode: String)
 }
