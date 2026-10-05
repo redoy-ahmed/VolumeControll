@@ -22,12 +22,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.redoy.volumecontroll.core.designsystem.theme.VolumeControllTheme
+import kotlin.math.abs
 
 @Composable
 fun FloatingVolumeButton(
     onClick: () -> Unit,
     onDrag: (Offset) -> Unit,
     onDragEnd: () -> Unit = {},
+    onVerticalScroll: (Float) -> Unit = {},
     modifier: Modifier = Modifier,
     size: Dp = 56.dp,
     opacity: Float = 0.9f
@@ -52,6 +54,9 @@ fun FloatingVolumeButton(
                 ) { change, dragAmount ->
                     change.consume()
                     onDrag(dragAmount)
+                    if (abs(dragAmount.y) > abs(dragAmount.x)) {
+                        onVerticalScroll(dragAmount.y)
+                    }
                 }
             },
         contentAlignment = Alignment.Center
@@ -76,7 +81,8 @@ fun FloatingVolumeButtonPreview() {
         FloatingVolumeButton(
             onClick = {},
             onDrag = {},
-            onDragEnd = {}
+            onDragEnd = {},
+            onVerticalScroll = {}
         )
     }
 }

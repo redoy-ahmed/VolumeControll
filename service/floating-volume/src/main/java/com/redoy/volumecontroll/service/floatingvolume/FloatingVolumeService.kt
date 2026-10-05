@@ -160,6 +160,16 @@ class FloatingVolumeService : Service(), LifecycleOwner, ViewModelStoreOwner,
                                     }
                                 }
                             },
+                            onVerticalScroll = { dy ->
+                                serviceScope.launch {
+                                    val currentPrefs = preferencesRepository.userPreferences.first()
+                                    if (dy < -5f) {
+                                        volumeController.increaseVolume(currentPrefs.selectedStream)
+                                    } else if (dy > 5f) {
+                                        volumeController.decreaseVolume(currentPrefs.selectedStream)
+                                    }
+                                }
+                            },
                             onDragEnd = {
                                 floatingParams?.let { params ->
                                     val metrics = android.util.DisplayMetrics()

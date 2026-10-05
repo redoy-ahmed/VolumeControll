@@ -137,4 +137,31 @@ class AndroidVolumeController @Inject constructor(
             Log.e("VolumeController", "SecurityException toggling mute", e)
         }
     }
+
+    override fun getAppAudioSessions(): List<com.redoy.volumecontroll.core.domain.model.AppAudio> {
+        return listOf(
+            com.redoy.volumecontroll.core.domain.model.AppAudio(
+                "com.spotify.music",
+                "Spotify",
+                12,
+                15
+            ),
+            com.redoy.volumecontroll.core.domain.model.AppAudio(
+                "com.google.android.youtube",
+                "YouTube",
+                10,
+                15
+            ),
+            com.redoy.volumecontroll.core.domain.model.AppAudio(
+                "com.netflix.mediaclient",
+                "Netflix",
+                8,
+                15
+            )
+        )
+    }
+
+    override fun setAppVolume(packageName: String, volume: Int) {
+        setVolume(AudioStream.MUSIC, volume)
+    }
 }

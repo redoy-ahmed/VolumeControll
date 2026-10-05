@@ -23,11 +23,9 @@ import androidx.compose.ui.unit.dp
 import com.redoy.volumecontroll.core.domain.model.AudioStream
 import com.redoy.volumecontroll.core.domain.model.VolumeProfile
 import com.redoy.volumecontroll.core.domain.model.VolumeState
-import com.redoy.volumecontroll.core.ui.components.PermissionCard
 import com.redoy.volumecontroll.core.ui.components.StatusIndicator
 import com.redoy.volumecontroll.core.ui.components.VolumePanel
 import com.redoy.volumecontroll.core.ui.components.VolumeProfileSelector
-import com.redoy.volumecontroll.core.ui.components.VolumeStreamSelector
 import com.redoy.volumecontroll.core.designsystem.theme.VolumeControllTheme
 
 @Composable
@@ -41,9 +39,11 @@ fun HomeScreen(
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val selectedProfileId by viewModel.selectedProfileId.collectAsState()
 
     HomeScreen(
         uiState = uiState,
+        selectedProfileId = selectedProfileId,
         hasOverlayPermission = hasOverlayPermission,
         onRequestPermission = onRequestPermission,
         onStartService = onStartService,
@@ -61,6 +61,7 @@ fun HomeScreen(
 @Composable
 fun HomeScreen(
     uiState: HomeUiState,
+    selectedProfileId: String,
     hasOverlayPermission: Boolean,
     onRequestPermission: () -> Unit,
     onStartService: () -> Unit,
@@ -104,7 +105,7 @@ fun HomeScreen(
                 modifier = Modifier.align(Alignment.Start)
             )
             VolumeProfileSelector(
-                selectedProfileId = "",
+                selectedProfileId = selectedProfileId,
                 onProfileSelected = onProfileSelected
             )
 
@@ -146,6 +147,7 @@ fun HomeScreenPreview() {
                 isEnabled = true,
                 selectedStream = AudioStream.MUSIC
             ),
+            selectedProfileId = "normal",
             hasOverlayPermission = true,
             onRequestPermission = {},
             onStartService = {},

@@ -9,8 +9,12 @@ import com.redoy.volumecontroll.core.domain.repository.UserPreferencesRepository
 import com.redoy.volumecontroll.core.domain.repository.VolumeController
 import com.redoy.volumecontroll.core.domain.usecase.ApplyProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -29,14 +33,19 @@ class HomeViewModel @Inject constructor(
     private val applyProfileUseCase: ApplyProfileUseCase
 ) : ViewModel() {
 
+    private val _selectedProfileId = MutableStateFlow("")
+    val selectedProfileId: StateFlow<String> = _selectedProfileId.asStateFlow()
+
+    @OptIn(ExperimentalCoroutinesApi::class)
     val uiState: StateFlow<HomeUiState> = preferencesRepository.userPreferences
-        .map { prefs ->
-            val volState = volumeController.getVolume(prefs.selectedStream)
-            HomeUiState(
-                volumeState = volState,
-                isEnabled = prefs.isEnabled,
-                selectedStream = prefs.selectedStream
-            )
+        .flatMapLatest { prefs ->
+            volumeController.observeVolume(prefs.selectedStream).map { volState ->
+                HomeUiState(
+                    volumeState = volState,
+                    isEnabled = prefs.isEnabled,
+                    selectedStream = prefs.selectedStream
+                )
+            }
         }
         .stateIn(
             scope = viewModelScope,
@@ -76,6 +85,7 @@ class HomeViewModel @Inject constructor(
 
     fun applyProfile(profile: VolumeProfile) {
         viewModelScope.launch {
+            _selectedProfileId.value = profile.id
             applyProfileUseCase(profile)
         }
     }
