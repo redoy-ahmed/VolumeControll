@@ -37,6 +37,7 @@ fun SettingsScreen(
     onNavigateAudioEffects: () -> Unit,
     onNavigatePerAppVolume: () -> Unit,
     onNavigateVolumeHistory: () -> Unit,
+    onNavigateVolumeSchedules: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -53,6 +54,7 @@ fun SettingsScreen(
         onNavigateAudioEffects = onNavigateAudioEffects,
         onNavigatePerAppVolume = onNavigatePerAppVolume,
         onNavigateVolumeHistory = onNavigateVolumeHistory,
+        onNavigateVolumeSchedules = onNavigateVolumeSchedules,
         onBack = onBack,
         modifier = modifier
     )
@@ -72,6 +74,7 @@ fun SettingsScreen(
     onNavigateAudioEffects: () -> Unit,
     onNavigatePerAppVolume: () -> Unit,
     onNavigateVolumeHistory: () -> Unit,
+    onNavigateVolumeSchedules: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -220,6 +223,13 @@ fun SettingsScreen(
             }
 
             Button(
+                onClick = onNavigateVolumeSchedules,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = "Volume Schedules")
+            }
+
+            Button(
                 onClick = onBack,
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -253,6 +263,7 @@ fun SettingsScreenPreview() {
             onNavigateAudioEffects = {},
             onNavigatePerAppVolume = {},
             onNavigateVolumeHistory = {},
+            onNavigateVolumeSchedules = {},
             onBack = {}
         )
     }

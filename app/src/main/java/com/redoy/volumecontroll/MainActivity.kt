@@ -30,6 +30,8 @@ import com.redoy.volumecontroll.feature.settings.SettingsScreen
 import com.redoy.volumecontroll.feature.settings.SettingsViewModel
 import com.redoy.volumecontroll.feature.settings.VolumeHistoryScreen
 import com.redoy.volumecontroll.feature.settings.VolumeHistoryViewModel
+import com.redoy.volumecontroll.feature.settings.VolumeScheduleScreen
+import com.redoy.volumecontroll.feature.settings.VolumeScheduleViewModel
 import com.redoy.volumecontroll.service.floatingvolume.FloatingVolumeService
 import com.redoy.volumecontroll.ui.theme.VolumeControllTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -101,7 +103,8 @@ class MainActivity : ComponentActivity() {
                             onBack = { navController.popBackStack() },
                             onNavigateAudioEffects = { navController.navigate("audio_effects") },
                             onNavigatePerAppVolume = { navController.navigate("per_app_volume") },
-                            onNavigateVolumeHistory = { navController.navigate("volume_history") }
+                            onNavigateVolumeHistory = { navController.navigate("volume_history") },
+                            onNavigateVolumeSchedules = { navController.navigate("volume_schedules") }
                         )
                     }
                     composable("audio_effects") {
@@ -122,6 +125,13 @@ class MainActivity : ComponentActivity() {
                         val historyViewModel: VolumeHistoryViewModel = hiltViewModel()
                         VolumeHistoryScreen(
                             viewModel = historyViewModel,
+                            onBack = { navController.popBackStack() }
+                        )
+                    }
+                    composable("volume_schedules") {
+                        val scheduleViewModel: VolumeScheduleViewModel = hiltViewModel()
+                        VolumeScheduleScreen(
+                            viewModel = scheduleViewModel,
                             onBack = { navController.popBackStack() }
                         )
                     }
