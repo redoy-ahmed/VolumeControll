@@ -22,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.redoy.volumecontroll.core.ui.components.AppVolumePanel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,11 +32,12 @@ fun PerAppVolumeScreen(
     modifier: Modifier = Modifier
 ) {
     val rules by viewModel.rules.collectAsState()
+    val activeApps by viewModel.activeApps.collectAsState()
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Per-App Volume Rules") }
+                title = { Text(text = "Per-App Volume Control") }
             )
         },
         modifier = modifier
@@ -47,9 +49,16 @@ fun PerAppVolumeScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            AppVolumePanel(
+                apps = activeApps,
+                onVolumeChanged = { pkg, vol ->
+                    viewModel.setAppVolume(pkg, vol.toInt())
+                }
+            )
+
             Text(
-                text = "Configure custom volume levels for specific apps when active.",
-                style = MaterialTheme.typography.bodyMedium
+                text = "Configured Per-App Rules",
+                style = MaterialTheme.typography.titleMedium
             )
 
             LazyColumn(
