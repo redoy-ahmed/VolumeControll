@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Floating Volume Controller</string>
+    <string name="title_home">Floating Volume Controller</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_permission">Permission Required</string>
+    <string name="title_volume_panel">Volume Control Panel</string>
+    <string name="btn_grant_permission">Grant Overlay Permission</string>
+    <string name="btn_start_service">Start Floating Service</string>
+    <string name="btn_stop_service">Stop Service</string>
+    <string name="btn_settings">Settings</string>
+    <string name="btn_back">Back</string>
+    <string name="setting_enable_controller">Enable Floating Controller</string>
+    <string name="label_default_stream">Default Audio Stream</string>
+    <string name="label_button_size">Button Size</string>
+    <string name="label_button_opacity">Button Opacity</string>
+    <string name="desc_floating_button">Floating Volume Controller</string>
+    <string name="permission_card_title">Overlay Permission Required</string>
+    <string name="permission_card_desc">To show the floating volume control over other apps, please grant overlay permission.</string>
+</resources>
