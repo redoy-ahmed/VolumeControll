@@ -3,9 +3,11 @@ package com.redoy.volumecontroll.feature.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.redoy.volumecontroll.core.domain.model.AudioStream
+import com.redoy.volumecontroll.core.domain.model.VolumeProfile
 import com.redoy.volumecontroll.core.domain.model.VolumeState
 import com.redoy.volumecontroll.core.domain.repository.UserPreferencesRepository
 import com.redoy.volumecontroll.core.domain.repository.VolumeController
+import com.redoy.volumecontroll.core.domain.usecase.ApplyProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -23,7 +25,8 @@ data class HomeUiState(
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val volumeController: VolumeController,
-    private val preferencesRepository: UserPreferencesRepository
+    private val preferencesRepository: UserPreferencesRepository,
+    private val applyProfileUseCase: ApplyProfileUseCase
 ) : ViewModel() {
 
     val uiState: StateFlow<HomeUiState> = preferencesRepository.userPreferences
@@ -68,6 +71,12 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             val currentStream = uiState.value.selectedStream
             volumeController.toggleMute(currentStream)
+        }
+    }
+
+    fun applyProfile(profile: VolumeProfile) {
+        viewModelScope.launch {
+            applyProfileUseCase(profile)
         }
     }
 }

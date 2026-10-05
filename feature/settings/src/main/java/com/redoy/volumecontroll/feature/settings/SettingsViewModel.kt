@@ -3,6 +3,7 @@ package com.redoy.volumecontroll.feature.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.redoy.volumecontroll.core.domain.model.AudioStream
+import com.redoy.volumecontroll.core.domain.repository.AudioEffectsController
 import com.redoy.volumecontroll.core.domain.repository.UserPreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -21,7 +22,8 @@ data class SettingsUiState(
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val preferencesRepository: UserPreferencesRepository
+    private val preferencesRepository: UserPreferencesRepository,
+    val audioEffectsController: AudioEffectsController
 ) : ViewModel() {
 
     val uiState: StateFlow<SettingsUiState> = preferencesRepository.userPreferences

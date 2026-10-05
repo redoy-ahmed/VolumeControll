@@ -27,6 +27,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.redoy.volumecontroll.feature.home.HomeScreen
 import com.redoy.volumecontroll.feature.home.HomeViewModel
+import com.redoy.volumecontroll.feature.settings.AudioEffectsScreen
 import com.redoy.volumecontroll.feature.settings.SettingsScreen
 import com.redoy.volumecontroll.feature.settings.SettingsViewModel
 import com.redoy.volumecontroll.service.floatingvolume.FloatingVolumeService
@@ -86,6 +87,14 @@ class MainActivity : ComponentActivity() {
                         val settingsViewModel: SettingsViewModel = hiltViewModel()
                         SettingsScreen(
                             viewModel = settingsViewModel,
+                            onBack = { navController.popBackStack() },
+                            onNavigateAudioEffects = { navController.navigate("audio_effects") }
+                        )
+                    }
+                    composable("audio_effects") {
+                        val settingsViewModel: SettingsViewModel = hiltViewModel()
+                        AudioEffectsScreen(
+                            audioEffectsController = settingsViewModel.audioEffectsController,
                             onBack = { navController.popBackStack() }
                         )
                     }

@@ -21,9 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.redoy.volumecontroll.core.domain.model.AudioStream
+import com.redoy.volumecontroll.core.domain.model.VolumeProfile
 import com.redoy.volumecontroll.core.domain.model.VolumeState
+import com.redoy.volumecontroll.core.ui.components.PermissionCard
 import com.redoy.volumecontroll.core.ui.components.StatusIndicator
 import com.redoy.volumecontroll.core.ui.components.VolumePanel
+import com.redoy.volumecontroll.core.ui.components.VolumeProfileSelector
 import com.redoy.volumecontroll.core.ui.components.VolumeStreamSelector
 import com.redoy.volumecontroll.core.designsystem.theme.VolumeControllTheme
 
@@ -49,6 +52,7 @@ fun HomeScreen(
         onVolumeChanged = { viewModel.setVolume(it) },
         onToggleMute = { viewModel.toggleMute() },
         onStreamSelected = { viewModel.updateStream(it) },
+        onProfileSelected = { viewModel.applyProfile(it) },
         modifier = modifier
     )
 }
@@ -65,6 +69,7 @@ fun HomeScreen(
     onVolumeChanged: (Float) -> Unit,
     onToggleMute: () -> Unit,
     onStreamSelected: (AudioStream) -> Unit,
+    onProfileSelected: (VolumeProfile) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
@@ -91,6 +96,16 @@ fun HomeScreen(
                 onToggleMute = onToggleMute,
                 onClose = {},
                 onStreamSelected = onStreamSelected
+            )
+
+            Text(
+                text = "Quick Volume Profiles",
+                style = MaterialTheme.typography.titleSmall,
+                modifier = Modifier.align(Alignment.Start)
+            )
+            VolumeProfileSelector(
+                selectedProfileId = "",
+                onProfileSelected = onProfileSelected
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -138,7 +153,8 @@ fun HomeScreenPreview() {
             onNavigateSettings = {},
             onVolumeChanged = {},
             onToggleMute = {},
-            onStreamSelected = {}
+            onStreamSelected = {},
+            onProfileSelected = {}
         )
     }
 }

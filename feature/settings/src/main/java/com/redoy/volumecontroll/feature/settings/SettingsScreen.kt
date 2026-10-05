@@ -28,6 +28,7 @@ import com.redoy.volumecontroll.core.ui.components.VolumeStreamSelector
 fun SettingsScreen(
     viewModel: SettingsViewModel,
     onBack: () -> Unit,
+    onNavigateAudioEffects: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -38,6 +39,7 @@ fun SettingsScreen(
         onStreamSelected = { viewModel.updateStream(it) },
         onButtonSizeChanged = { viewModel.updateButtonSize(it) },
         onButtonOpacityChanged = { viewModel.updateButtonOpacity(it) },
+        onNavigateAudioEffects = onNavigateAudioEffects,
         onBack = onBack,
         modifier = modifier
     )
@@ -51,6 +53,7 @@ fun SettingsScreen(
     onStreamSelected: (AudioStream) -> Unit,
     onButtonSizeChanged: (Float) -> Unit,
     onButtonOpacityChanged: (Float) -> Unit,
+    onNavigateAudioEffects: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -121,6 +124,13 @@ fun SettingsScreen(
             )
 
             Button(
+                onClick = onNavigateAudioEffects,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = "Equalizer & Sound Effects")
+            }
+
+            Button(
                 onClick = onBack,
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -145,6 +155,7 @@ fun SettingsScreenPreview() {
             onStreamSelected = {},
             onButtonSizeChanged = {},
             onButtonOpacityChanged = {},
+            onNavigateAudioEffects = {},
             onBack = {}
         )
     }

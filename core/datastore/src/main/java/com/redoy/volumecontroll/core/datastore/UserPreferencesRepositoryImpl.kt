@@ -45,7 +45,8 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         .map { preferences ->
             val x = preferences[PreferencesKeys.FLOATING_X] ?: 100f
             val y = preferences[PreferencesKeys.FLOATING_Y] ?: 100f
-            val streamOrdinal = preferences[PreferencesKeys.SELECTED_STREAM] ?: AudioStream.MUSIC.ordinal
+            val streamOrdinal =
+                preferences[PreferencesKeys.SELECTED_STREAM] ?: AudioStream.MUSIC.ordinal
             val stream = AudioStream.entries.getOrNull(streamOrdinal) ?: AudioStream.MUSIC
             val isEnabled = preferences[PreferencesKeys.IS_ENABLED] ?: true
             val buttonSize = preferences[PreferencesKeys.BUTTON_SIZE] ?: 56
