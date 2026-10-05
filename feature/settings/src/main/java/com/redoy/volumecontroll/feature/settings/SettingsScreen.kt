@@ -36,6 +36,7 @@ fun SettingsScreen(
     onBack: () -> Unit,
     onNavigateAudioEffects: () -> Unit,
     onNavigatePerAppVolume: () -> Unit,
+    onNavigateVolumeHistory: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -51,6 +52,7 @@ fun SettingsScreen(
         onThemeModeSelected = { viewModel.updateThemeMode(it) },
         onNavigateAudioEffects = onNavigateAudioEffects,
         onNavigatePerAppVolume = onNavigatePerAppVolume,
+        onNavigateVolumeHistory = onNavigateVolumeHistory,
         onBack = onBack,
         modifier = modifier
     )
@@ -69,6 +71,7 @@ fun SettingsScreen(
     onThemeModeSelected: (String) -> Unit,
     onNavigateAudioEffects: () -> Unit,
     onNavigatePerAppVolume: () -> Unit,
+    onNavigateVolumeHistory: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -210,6 +213,13 @@ fun SettingsScreen(
             }
 
             Button(
+                onClick = onNavigateVolumeHistory,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = "Volume History Dashboard")
+            }
+
+            Button(
                 onClick = onBack,
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -242,6 +252,7 @@ fun SettingsScreenPreview() {
             onThemeModeSelected = {},
             onNavigateAudioEffects = {},
             onNavigatePerAppVolume = {},
+            onNavigateVolumeHistory = {},
             onBack = {}
         )
     }

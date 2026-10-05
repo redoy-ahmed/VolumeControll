@@ -2,8 +2,10 @@ package com.redoy.volumecontroll.core.datastore.di
 
 import com.redoy.volumecontroll.core.datastore.PerAppVolumeRepositoryImpl
 import com.redoy.volumecontroll.core.datastore.UserPreferencesRepositoryImpl
+import com.redoy.volumecontroll.core.datastore.VolumeHistoryRepositoryImpl
 import com.redoy.volumecontroll.core.domain.repository.PerAppVolumeRepository
 import com.redoy.volumecontroll.core.domain.repository.UserPreferencesRepository
+import com.redoy.volumecontroll.core.domain.repository.VolumeHistoryRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -25,4 +27,10 @@ abstract class DataStoreModule {
     abstract fun bindPerAppVolumeRepository(
         impl: PerAppVolumeRepositoryImpl
     ): PerAppVolumeRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindVolumeHistoryRepository(
+        impl: VolumeHistoryRepositoryImpl
+    ): VolumeHistoryRepository
 }

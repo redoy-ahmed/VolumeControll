@@ -28,6 +28,8 @@ import com.redoy.volumecontroll.feature.settings.PerAppVolumeScreen
 import com.redoy.volumecontroll.feature.settings.PerAppVolumeViewModel
 import com.redoy.volumecontroll.feature.settings.SettingsScreen
 import com.redoy.volumecontroll.feature.settings.SettingsViewModel
+import com.redoy.volumecontroll.feature.settings.VolumeHistoryScreen
+import com.redoy.volumecontroll.feature.settings.VolumeHistoryViewModel
 import com.redoy.volumecontroll.service.floatingvolume.FloatingVolumeService
 import com.redoy.volumecontroll.ui.theme.VolumeControllTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -98,7 +100,8 @@ class MainActivity : ComponentActivity() {
                             viewModel = settingsViewModel,
                             onBack = { navController.popBackStack() },
                             onNavigateAudioEffects = { navController.navigate("audio_effects") },
-                            onNavigatePerAppVolume = { navController.navigate("per_app_volume") }
+                            onNavigatePerAppVolume = { navController.navigate("per_app_volume") },
+                            onNavigateVolumeHistory = { navController.navigate("volume_history") }
                         )
                     }
                     composable("audio_effects") {
@@ -112,6 +115,13 @@ class MainActivity : ComponentActivity() {
                         val perAppViewModel: PerAppVolumeViewModel = hiltViewModel()
                         PerAppVolumeScreen(
                             viewModel = perAppViewModel,
+                            onBack = { navController.popBackStack() }
+                        )
+                    }
+                    composable("volume_history") {
+                        val historyViewModel: VolumeHistoryViewModel = hiltViewModel()
+                        VolumeHistoryScreen(
+                            viewModel = historyViewModel,
                             onBack = { navController.popBackStack() }
                         )
                     }
